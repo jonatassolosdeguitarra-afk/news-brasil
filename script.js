@@ -3,7 +3,7 @@
 // script.js
 // ==========================================
 
-const API_URL = "http://127.0.0.1:5000/noticias";
+const API_URL = "https://news-brasil-api.onrender.com/noticias";
 
 async function carregarNoticias() {
 
@@ -84,7 +84,7 @@ async function carregarNoticias() {
                 <p>
                     Verifique se o Flask está rodando em
                     <br>
-                    http://127.0.0.1:5000
+                    https://news-brasil-api.onrender.com
                 </p>
 
             </div>

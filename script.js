@@ -1,95 +1,72 @@
-async function carregarCategoria(categoria) {
+const API_URL = "https://news-brasil-api.onrender.com/noticias";
+
+
+async function carregarNoticias() {
 
     const lista = document.getElementById("lista-noticias");
 
 
     if (!lista) {
+        console.log("Lista não encontrada");
         return;
     }
 
 
     lista.innerHTML = `
-
-    <div class="card-noticia">
-
-        <h3>
-        Carregando ${categoria}...
-        </h3>
-
-        <p>
-        Buscando notícias atualizadas.
-        </p>
-
-    </div>
-
+        <div class="card-noticia">
+            <h3>Carregando notícias...</h3>
+            <p>Aguarde alguns segundos.</p>
+        </div>
     `;
-
 
 
     try {
 
+        const resposta = await fetch(API_URL);
 
-        const resposta = await fetch(
-            API_URL + "?categoria=" + categoria
-        );
 
+        if (!resposta.ok) {
+
+            throw new Error("Erro na API");
+
+        }
 
 
         const noticias = await resposta.json();
 
 
-
         lista.innerHTML = "";
-
 
 
         noticias.forEach(noticia => {
 
 
-
             lista.innerHTML += `
-
 
             <article class="card-noticia">
 
-
                 ${
                 noticia.imagem
-
                 ?
-
-                `<img src="${noticia.imagem}" alt="Notícia">`
-
+                `<img src="${noticia.imagem}" loading="lazy">`
                 :
-
                 ""
-
                 }
 
 
-
                 <h3>
-
                 ${noticia.titulo || "News Brasil Notícias"}
-
                 </h3>
 
 
-
                 <p>
-
                 ${noticia.resumo || ""}
-
                 </p>
 
 
-
                 <a href="${noticia.link}" target="_blank">
-
                 Ler notícia
-
                 </a>
-
 
 
             </article>
@@ -101,20 +78,19 @@ async function carregarCategoria(categoria) {
         });
 
 
+    } catch(error){
 
-    } catch (erro) {
 
-
-        console.error(erro);
+        console.log(error);
 
 
         lista.innerHTML = `
 
         <div class="card-noticia">
 
-            <h3>
-            Erro ao carregar notícias
-            </h3>
+        <h3>Erro ao carregar notícias</h3>
+
+        <p>Tente novamente.</p>
 
         </div>
 
@@ -125,3 +101,31 @@ async function carregarCategoria(categoria) {
 
 
 }
+
+
+
+
+
+// menu categorias
+
+function carregarCategoria(nome){
+
+
+    console.log("Categoria selecionada:", nome);
+
+
+    carregarNoticias();
+
+
+}
+
+
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+    carregarNoticias();
+
+});

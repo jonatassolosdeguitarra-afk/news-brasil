@@ -1,71 +1,99 @@
-const API_URL = "https://news-brasil-api.onrender.com/noticias";
-
-
-async function carregarNoticias() {
+async function carregarCategoria(categoria) {
 
     const lista = document.getElementById("lista-noticias");
 
 
     if (!lista) {
-        console.error("Elemento lista-noticias não encontrado");
         return;
     }
 
 
     lista.innerHTML = `
-        <div class="card-noticia">
-            <h3>Carregando notícias...</h3>
-            <p>Aguarde alguns segundos.</p>
-        </div>
+
+    <div class="card-noticia">
+
+        <h3>
+        Carregando ${categoria}...
+        </h3>
+
+        <p>
+        Buscando notícias atualizadas.
+        </p>
+
+    </div>
+
     `;
+
 
 
     try {
 
-        const resposta = await fetch(API_URL);
+
+        const resposta = await fetch(
+            API_URL + "?categoria=" + categoria
+        );
+
 
 
         const noticias = await resposta.json();
 
 
+
         lista.innerHTML = "";
+
 
 
         noticias.forEach(noticia => {
 
 
+
             lista.innerHTML += `
+
 
             <article class="card-noticia">
 
 
-                ${noticia.imagem ? 
-                
+                ${
+                noticia.imagem
+
+                ?
+
                 `<img src="${noticia.imagem}" alt="Notícia">`
-                
+
                 :
-                
+
                 ""
-                
+
                 }
 
 
+
                 <h3>
-                    ${noticia.titulo || "News Brasil Notícias"}
+
+                ${noticia.titulo || "News Brasil Notícias"}
+
                 </h3>
 
 
+
                 <p>
-                    ${noticia.resumo || ""}
+
+                ${noticia.resumo || ""}
+
                 </p>
 
 
+
                 <a href="${noticia.link}" target="_blank">
-                    Ler notícia
+
+                Ler notícia
+
                 </a>
 
 
+
             </article>
+
 
             `;
 
@@ -73,19 +101,20 @@ async function carregarNoticias() {
         });
 
 
+
     } catch (erro) {
 
 
-        console.error("Erro:", erro);
+        console.error(erro);
 
 
         lista.innerHTML = `
 
         <div class="card-noticia">
 
-            <h3>Erro ao conectar</h3>
-
-            <p>Não foi possível carregar as notícias.</p>
+            <h3>
+            Erro ao carregar notícias
+            </h3>
 
         </div>
 
@@ -94,12 +123,5 @@ async function carregarNoticias() {
 
     }
 
+
 }
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    carregarNoticias();
-
-});

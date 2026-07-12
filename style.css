@@ -1,0 +1,485 @@
+/* =========================================
+   NEWS BRASIL NOTÍCIAS
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:#f2f2f2;
+
+    color:#222;
+
+    line-height:1.6;
+
+}
+
+/* ===========================
+HEADER
+=========================== */
+
+header{
+
+    background:#0b4ea2;
+
+    color:#fff;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.2);
+
+}
+
+.logo{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+/* ===========================
+MENU
+=========================== */
+
+nav{
+
+    background:#083b7a;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:18px;
+
+    transition:.3s;
+
+    font-weight:bold;
+
+}
+
+nav a:hover{
+
+    background:#0d61c5;
+
+}
+
+/* ===========================
+BANNER
+=========================== */
+
+.banner{
+
+    background:linear-gradient(90deg,#0b4ea2,#1b7ff3);
+
+    color:white;
+
+    text-align:center;
+
+    padding:70px 20px;
+
+}
+
+.banner h1{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+}
+
+.banner p{
+
+    font-size:20px;
+
+}
+
+/* ===========================
+DESTAQUE
+=========================== */
+
+.principal{
+
+    width:95%;
+
+    max-width:1200px;
+
+    margin:40px auto;
+
+    background:white;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.principal img{
+
+    width:500px;
+
+    max-width:100%;
+
+    object-fit:cover;
+
+}
+
+.principal div{
+
+    flex:1;
+
+    padding:30px;
+
+}
+
+.principal h2{
+
+    margin-bottom:20px;
+
+    color:#0b4ea2;
+
+}
+
+.principal p{
+
+    margin-bottom:25px;
+
+}
+
+/* ===========================
+BOTÕES
+=========================== */
+
+.btn-noticia{
+
+    background:#0b4ea2;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 22px;
+
+    cursor:pointer;
+
+    border-radius:6px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.btn-noticia:hover{
+
+    background:#1b7ff3;
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+CONTEÚDO
+=========================== */
+
+.conteudo{
+
+    width:95%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+.conteudo h2{
+
+    margin-bottom:30px;
+
+    color:#0b4ea2;
+
+}
+
+/* ===========================
+CARDS
+=========================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:25px;
+
+    margin-bottom:50px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+}
+
+.card h3{
+
+    padding:18px;
+
+    color:#0b4ea2;
+
+    font-size:22px;
+
+}
+
+.card p{
+
+    padding:0 18px 20px;
+
+    color:#444;
+
+}
+
+.card a{
+
+    text-decoration:none;
+
+}
+
+.card button{
+
+    width:calc(100% - 36px);
+
+    margin:0 18px 18px;
+
+}
+
+/* ===========================
+IA
+=========================== */
+
+.inteligencia{
+
+    background:white;
+
+    width:95%;
+
+    max-width:1200px;
+
+    margin:40px auto;
+
+    padding:35px;
+
+    border-radius:10px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+
+}
+
+.inteligencia h2{
+
+    color:#0b4ea2;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+NEWSLETTER
+=========================== */
+
+.newsletter{
+
+    background:#0b4ea2;
+
+    color:white;
+
+    text-align:center;
+
+    padding:50px 20px;
+
+}
+
+.newsletter h2{
+
+    margin-bottom:25px;
+
+}
+
+.newsletter input{
+
+    width:320px;
+
+    max-width:90%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:6px;
+
+    margin-bottom:15px;
+
+}
+
+.newsletter button{
+
+    padding:15px 30px;
+
+    border:none;
+
+    border-radius:6px;
+
+    background:#28a745;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.newsletter button:hover{
+
+    background:#1d8a37;
+
+}
+
+/* ===========================
+RODAPÉ
+=========================== */
+
+footer{
+
+    background:#222;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+footer p{
+
+    margin:8px 0;
+
+}
+
+/* ===========================
+RESPONSIVO
+=========================== */
+
+@media(max-width:900px){
+
+    .principal{
+
+        flex-direction:column;
+
+    }
+
+    .banner h1{
+
+        font-size:30px;
+
+    }
+
+    .logo{
+
+        font-size:28px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    nav{
+
+        flex-direction:column;
+
+    }
+
+    nav a{
+
+        text-align:center;
+
+    }
+
+    .banner{
+
+        padding:40px 20px;
+
+    }
+
+    .banner h1{
+
+        font-size:24px;
+
+    }
+
+    .principal div{
+
+        padding:20px;
+
+    }
+
+    .card h3{
+
+        font-size:20px;
+
+    }
+
+}

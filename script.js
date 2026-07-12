@@ -22,12 +22,13 @@ async function carregarNoticias() {
 
     try {
 
+
         const resposta = await fetch(API_URL);
 
 
         if (!resposta.ok) {
 
-            throw new Error("Erro na API");
+            throw new Error("Erro ao conectar API");
 
         }
 
@@ -45,10 +46,11 @@ async function carregarNoticias() {
 
             <article class="card-noticia">
 
+
                 ${
                 noticia.imagem
                 ?
-                `<img src="${noticia.imagem}" loading="lazy">`
+                `<img src="${noticia.imagem}" loading="lazy" alt="Notícia">`
                 :
                 ""
                 }
@@ -60,12 +62,16 @@ async function carregarNoticias() {
 
 
                 <p>
-                ${noticia.resumo || ""}
+                ${noticia.resumo || "Sem resumo disponível"}
                 </p>
 
 
-                <a href="${noticia.link}" target="_blank">
+                <a 
+                href="${noticia.link}" 
+                target="_blank">
+
                 Ler notícia
+
                 </a>
 
 
@@ -78,44 +84,28 @@ async function carregarNoticias() {
         });
 
 
-    } catch(error){
+    } catch(error) {
 
 
-        console.log(error);
+        console.error(error);
 
 
         lista.innerHTML = `
 
-        <div class="card-noticia">
+        <article class="card-noticia">
 
-        <h3>Erro ao carregar notícias</h3>
+            <h3>Erro ao carregar notícias</h3>
 
-        <p>Tente novamente.</p>
+            <p>
+            Não foi possível conectar ao servidor.
+            </p>
 
-        </div>
+        </article>
 
         `;
 
 
     }
-
-
-}
-
-
-
-
-
-// menu categorias
-
-function carregarCategoria(nome){
-
-
-    console.log("Categoria selecionada:", nome);
-
-
-    carregarNoticias();
-
 
 }
 

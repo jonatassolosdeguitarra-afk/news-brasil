@@ -8,34 +8,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>🇧🇷 News Brasil Notícias</title>
 
-
-<!-- Compartilhamento profissional -->
-
-<meta property="og:title" content="🇧🇷 News Brasil Notícias - Notícias em Tempo Real">
-
-<meta property="og:description" content="Acompanhe as principais notícias do Brasil e do mundo atualizadas automaticamente.">
-
-<meta property="og:image" content="https://picsum.photos/1200/630">
-
-<meta property="og:url" content="https://news-brasil.onrender.com">
-
-<meta property="og:type" content="website">
-
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="twitter:title" content="🇧🇷 News Brasil Notícias">
-
-<meta name="twitter:description" content="Portal de notícias atualizado em tempo real.">
-
-<meta name="twitter:image" content="https://picsum.photos/1200/630">
-
+<meta name="description" content="News Brasil Notícias - Notícias do Brasil e do mundo em tempo real">
 
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
@@ -43,106 +20,88 @@
 <body>
 
 
-<header>
+<!-- CABEÇALHO -->
 
-<div class="logo">
+<header class="topo">
 
-🇧🇷 NEWS BRASIL NOTÍCIAS
+    <div class="logo">
 
-</div>
+        <h1>
+            🇧🇷 NEWS BRASIL NOTÍCIAS
+        </h1>
 
+        <p>
+            As principais notícias do Brasil e do mundo em tempo real.
+        </p>
 
-<p>
-
-As principais notícias do Brasil e do mundo em tempo real.
-
-</p>
-
+    </div>
 
 </header>
 
 
 
+<!-- MENU -->
 
-<nav>
+<nav class="menu">
 
 
-<a href="#" onclick="carregarNoticias()">
-
+<button onclick="carregarCategoria('inicio')">
 🏠 Início
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('brasil')">
-
+<button onclick="carregarCategoria('brasil')">
 🇧🇷 Brasil
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('mundo')">
-
+<button onclick="carregarCategoria('mundo')">
 🌎 Mundo
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('politica')">
-
+<button onclick="carregarCategoria('politica')">
 🏛 Política
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('economia')">
-
+<button onclick="carregarCategoria('economia')">
 💰 Economia
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('tecnologia')">
-
+<button onclick="carregarCategoria('tecnologia')">
 💻 Tecnologia
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('esportes')">
-
+<button onclick="carregarCategoria('esportes')">
 ⚽ Esportes
+</button>
 
-</a>
 
-
-<a href="#" onclick="carregarCategoria('entretenimento')">
-
+<button onclick="carregarCategoria('entretenimento')">
 🎬 Entretenimento
-
-</a>
+</button>
 
 
 </nav>
 
 
 
+<!-- BANNER PRINCIPAL -->
 
 
 <section class="banner">
 
 
-<h1>
-
+<h2>
 🌎 Notícias em Tempo Real
-
-</h1>
+</h2>
 
 
 <p>
-
 Portal atualizado automaticamente com as principais notícias.
-
 </p>
 
 
@@ -152,10 +111,13 @@ Portal atualizado automaticamente com as principais notícias.
 
 
 
-<section class="conteudo">
+<!-- ÁREA PRINCIPAL -->
 
 
-<h2 class="titulo-noticias">
+<main>
+
+
+<h2 class="titulo">
 
 📰 Últimas Notícias
 
@@ -163,72 +125,18 @@ Portal atualizado automaticamente com as principais notícias.
 
 
 
-<div id="lista-noticias" class="cards">
+<section id="lista-noticias">
 
 
-<div class="card-noticia">
-
+<div class="card-noticia carregando">
 
 <h3>
-
 Carregando notícias...
-
 </h3>
 
 
 <p>
-
 Aguarde alguns segundos.
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="principal">
-
-
-<img
-
-src="https://picsum.photos/900/450"
-
-alt="Notícia principal">
-
-
-<div>
-
-
-<h2>
-
-Notícia Principal
-
-</h2>
-
-
-<p>
-
-Acompanhe os principais acontecimentos do Brasil e do mundo.
-
 </p>
 
 
@@ -239,68 +147,30 @@ Acompanhe os principais acontecimentos do Brasil e do mundo.
 
 
 
+</main>
 
 
 
 
 
-
-
-
-
-
-
-
-<section class="newsletter">
-
-
-<h2>
-
-Receba as principais notícias
-
-</h2>
-
-
-
-<input
-
-type="email"
-
-placeholder="Digite seu e-mail">
-
-
-
-<button>
-
-Cadastrar
-
-</button>
-
-
-
-</section>
-
-
-
-
-
+<!-- RODAPÉ -->
 
 
 <footer>
 
 
 <p>
-
-© 2026 News Brasil Notícias
-
+🇧🇷 News Brasil Notícias
 </p>
 
 
+<p>
+Notícias atualizadas automaticamente
+</p>
+
 
 <p>
-
-Portal desenvolvido com HTML, CSS, JavaScript e Python Flask.
-
+© 2026 Todos os direitos reservados
 </p>
 
 
@@ -316,5 +186,3 @@ Portal desenvolvido com HTML, CSS, JavaScript e Python Flask.
 </body>
 
 </html>
-```
-

@@ -4,13 +4,13 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>🇧🇷 News Brasil Notícias</title>
+<title>🇧🇷 News Brasil Notícias</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -33,20 +33,53 @@
 
     </p>
 
+
 </header>
+
 
 
 
 <nav>
 
-    <a href="#">Início</a>
-    <a href="#">Brasil</a>
-    <a href="#">Mundo</a>
-    <a href="#">Política</a>
-    <a href="#">Economia</a>
-    <a href="#">Tecnologia</a>
-    <a href="#">Esportes</a>
-    <a href="#">Entretenimento</a>
+    <a href="#" onclick="carregarNoticias()">
+        🏠 Início
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('brasil')">
+        🇧🇷 Brasil
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('mundo')">
+        🌎 Mundo
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('politica')">
+        🏛 Política
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('economia')">
+        💰 Economia
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('tecnologia')">
+        💻 Tecnologia
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('esportes')">
+        ⚽ Esportes
+    </a>
+
+
+    <a href="#" onclick="carregarCategoria('entretenimento')">
+        🎬 Entretenimento
+    </a>
+
 
 </nav>
 
@@ -54,47 +87,24 @@
 
 
 
-<section class="principal">
+<section class="banner">
 
 
-    <img
-    src="https://picsum.photos/900/450"
-    alt="Notícia principal">
+    <h1>
+
+        🌎 Notícias em Tempo Real
+
+    </h1>
 
 
-    <div>
+    <p>
 
+        Portal atualizado automaticamente com as principais notícias.
 
-        <h2>
-
-            Bem-vindo ao News Brasil Notícias
-
-        </h2>
-
-
-        <p>
-
-            Nosso sistema busca notícias automaticamente,
-            organiza as informações e apresenta os principais
-            acontecimentos do Brasil e do mundo.
-
-        </p>
-
-
-
-        <button class="btn-noticia">
-
-            Ver Destaques
-
-        </button>
-
-
-    </div>
+    </p>
 
 
 </section>
-
-
 
 
 
@@ -145,6 +155,43 @@
 
 
 
+<section class="principal">
+
+
+    <img
+    src="https://picsum.photos/900/450"
+    alt="Notícia principal">
+
+
+    <div>
+
+
+        <h2>
+
+            Notícia Principal
+
+        </h2>
+
+
+        <p>
+
+            Acompanhe os principais acontecimentos
+            do Brasil e do mundo.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
 <section class="newsletter">
 
 
@@ -167,7 +214,6 @@
         Cadastrar
 
     </button>
-
 
 
 </section>
@@ -205,6 +251,7 @@
 
 
 </body>
+
 
 </html>
 ```

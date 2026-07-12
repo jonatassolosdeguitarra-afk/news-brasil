@@ -1,19 +1,28 @@
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 import requests
 import os
+import time
 
 
 load_dotenv()
 
 
 app = Flask(__name__)
+
 CORS(app)
 
 
 API_KEY = os.getenv("NEWS_API_KEY")
+
+
+# Cache das notícias
+cache_noticias = []
+ultima_atualizacao = 0
+
+
+TEMPO_CACHE = 600  # 10 minutos
 
 
 
@@ -28,46 +37,35 @@ def home():
 
 
 
+
 def buscar_noticias(categoria="brasil"):
+
+    global cache_noticias
+    global ultima_atualizacao
+
+
+    agora = time.time()
+
+
+    # Retorna cache se ainda estiver válido
+    if cache_noticias and (agora - ultima_atualizacao < TEMPO_CACHE):
+
+        return cache_noticias
+
 
 
     if not API_KEY:
 
-        return [{
-            "titulo": "API não configurada",
-            "resumo": "Arquivo .env não encontrado",
-            "imagem": "",
-            "link": ""
-        }]
+        return [
 
+            {
+                "titulo": "API não configurada",
+                "resumo": "Arquivo .env não encontrado",
+                "imagem": "",
+                "link": ""
+            }
 
-
-    categorias = {
-
-
-        "brasil": "Brasil",
-
-        "mundo": "mundo",
-
-        "politica": "política",
-
-        "economia": "economia",
-
-        "tecnologia": "tecnologia",
-
-        "esportes": "esportes",
-
-        "entretenimento": "entretenimento"
-
-
-    }
-
-
-
-    termo = categorias.get(
-        categoria,
-        "Brasil"
-    )
+        ]
 
 
 
@@ -75,7 +73,7 @@ def buscar_noticias(categoria="brasil"):
 
         "https://newsapi.org/v2/everything"
 
-        f"?q={termo}"
+        f"?q={categoria}"
 
         "&language=pt"
 
@@ -89,48 +87,80 @@ def buscar_noticias(categoria="brasil"):
 
 
 
-    resposta = requests.get(
-        url,
-        timeout=15
-    )
+    try:
+
+
+        resposta = requests.get(
+
+            url,
+
+            timeout=8
+
+        )
+
+
+        dados = resposta.json()
 
 
 
-    dados = resposta.json()
+        noticias = []
 
 
 
-    print("====================")
-    print("CATEGORIA:", categoria)
-    print("STATUS NEWS API:", resposta.status_code)
-    print("====================")
+        for item in dados.get("articles", []):
+
+
+            noticias.append(
+
+                {
+
+                    "titulo": item.get("title"),
+
+                    "resumo": item.get("description"),
+
+                    "imagem": item.get("urlToImage"),
+
+                    "link": item.get("url")
+
+                }
+
+            )
 
 
 
-    noticias = []
+        cache_noticias = noticias
+
+        ultima_atualizacao = agora
 
 
 
-    for item in dados.get("articles", []):
-
-
-        noticias.append({
-
-
-            "titulo": item.get("title"),
-
-            "resumo": item.get("description"),
-
-            "imagem": item.get("urlToImage"),
-
-            "link": item.get("url")
-
-
-        })
+        return noticias
 
 
 
-    return noticias
+    except Exception as erro:
+
+
+        print("Erro News API:", erro)
+
+
+        return [
+
+            {
+
+                "titulo": "Erro ao buscar notícias",
+
+                "resumo": "Tente novamente mais tarde",
+
+                "imagem": "",
+
+                "link": ""
+
+            }
+
+        ]
+
+
 
 
 
@@ -141,14 +171,21 @@ def noticias():
 
 
     categoria = request.args.get(
+
         "categoria",
+
         "brasil"
+
     )
 
 
     return jsonify(
+
         buscar_noticias(categoria)
+
     )
+
+
 
 
 
@@ -157,11 +194,21 @@ def noticias():
 @app.route("/api")
 def api():
 
-    return jsonify({
 
-        "status":"online"
+    return jsonify(
 
-    })
+        {
+
+            "status": "online",
+
+            "servidor": "News Brasil Notícias"
+
+        }
+
+    )
+
+
+
 
 
 
@@ -182,4 +229,3 @@ if __name__ == "__main__":
         debug=True
 
     )
-```

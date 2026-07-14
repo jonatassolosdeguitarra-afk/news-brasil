@@ -1,0 +1,21 @@
+[
+    {
+        "titulo": "Principais notícias do Brasil",
+        "descricao": "Confira as principais informações do dia.",
+        "arquivo": "noticia1.mp4"
+    },
+
+
+    {
+        "titulo": "Tecnologia e novidades",
+        "descricao": "As principais novidades do mundo da tecnologia.",
+        "arquivo": "noticia2.mp4"
+    },
+
+
+    {
+        "titulo": "Notícias do mundo",
+        "descricao": "Atualizações internacionais.",
+        "arquivo": "noticia3.mp4"
+    }
+]

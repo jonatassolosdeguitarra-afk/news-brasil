@@ -1,121 +1,675 @@
-const API_URL = "https://news-brasil-api.onrender.com/noticias";
+/* =====================================
+   BR NEWS BRASIL NOTÍCIAS
+   JAVASCRIPT PROFISSIONAL 4.0
+===================================== */
 
 
-async function carregarNoticias() {
-
-    const lista = document.getElementById("lista-noticias");
-
-
-    if (!lista) {
-        console.log("Lista não encontrada");
-        return;
-    }
+const API_URL =
+"https://news-brasil-api.onrender.com/noticias";
 
 
-    lista.innerHTML = `
-        <div class="card-noticia">
-            <h3>Carregando notícias...</h3>
-            <p>Aguarde alguns segundos.</p>
-        </div>
-    `;
+const imagemPadrao =
+"imagens/fundo.jpg";
 
 
-    try {
+let todasNoticias = [];
 
 
-        const resposta = await fetch(API_URL);
+
+const cardsNoticias =
+document.getElementById("cardsNoticias");
 
 
-        if (!resposta.ok) {
-
-            throw new Error("Erro ao conectar API");
-
-        }
+const listaNoticias =
+document.getElementById("noticias");
 
 
-        const noticias = await resposta.json();
+const campoPesquisa =
+document.getElementById("campoPesquisa");
 
 
-        lista.innerHTML = "";
+const dataHora =
+document.getElementById("dataHora");
 
 
-        noticias.forEach(noticia => {
+
+const listaVideos =
+document.getElementById("listaVideos");
 
 
-            lista.innerHTML += `
-
-            <article class="card-noticia">
 
 
-                ${
-                noticia.imagem
-                ?
-                `<img src="${noticia.imagem}" loading="lazy" alt="Notícia">`
-                :
-                ""
-                }
 
 
-                <h3>
-                ${noticia.titulo || "News Brasil Notícias"}
-                </h3>
+
+/* =====================================
+   RELÓGIO
+===================================== */
 
 
-                <p>
-                ${noticia.resumo || "Sem resumo disponível"}
-                </p>
+function atualizarHora(){
 
 
-                <a 
-                href="${noticia.link}" 
-                target="_blank">
-
-                Ler notícia
-
-                </a>
+if(dataHora){
 
 
-            </article>
+const data = new Date();
 
 
-            `;
+dataHora.innerHTML =
+data.toLocaleString("pt-BR");
 
 
-        });
+}
 
 
-    } catch(error) {
+}
 
 
-        console.error(error);
+
+setInterval(
+atualizarHora,
+1000
+);
 
 
-        lista.innerHTML = `
-
-        <article class="card-noticia">
-
-            <h3>Erro ao carregar notícias</h3>
-
-            <p>
-            Não foi possível conectar ao servidor.
-            </p>
-
-        </article>
-
-        `;
+atualizarHora();
 
 
-    }
+
+
+
+
+
+
+
+/* =====================================
+   BUSCAR NOTÍCIAS
+===================================== */
+
+
+async function carregarNoticias(){
+
+
+try{
+
+
+const resposta =
+await fetch(API_URL);
+
+
+
+if(!resposta.ok){
+
+throw new Error(
+"API offline"
+);
+
+}
+
+
+
+const dados =
+await resposta.json();
+
+
+
+todasNoticias = dados;
+
+
+
+mostrarNoticias(dados);
+
+
+
+}
+
+catch(erro){
+
+
+console.log(
+erro
+);
+
+
+
+if(cardsNoticias){
+
+
+cardsNoticias.innerHTML = `
+
+<div class="loading">
+
+Não foi possível carregar notícias.
+
+</div>
+
+`;
+
+
+}
+
+
+
+}
+
+
 
 }
 
 
 
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
 
-    carregarNoticias();
+
+
+
+
+/* =====================================
+   MOSTRAR NOTÍCIAS
+===================================== */
+
+
+function mostrarNoticias(noticias){
+
+
+if(!cardsNoticias){
+
+return;
+
+}
+
+
+
+cardsNoticias.innerHTML="";
+
+
+
+if(listaNoticias){
+
+listaNoticias.innerHTML="";
+
+}
+
+
+
+noticias
+.slice(0,12)
+.forEach((noticia,index)=>{
+
+
+const titulo =
+
+noticia.titulo ||
+noticia.title ||
+"Sem título";
+
+
+
+const descricao =
+
+noticia.descricao ||
+noticia.description ||
+"Confira essa notícia completa.";
+
+
+
+const imagem =
+
+noticia.imagem ||
+noticia.image ||
+noticia.urlToImage ||
+imagemPadrao;
+
+
+
+const categoria =
+
+noticia.categoria ||
+"Brasil";
+
+
+
+
+
+
+
+/* ======================
+   DESTAQUE
+====================== */
+
+
+if(index===0){
+
+
+const img =
+document.querySelector(
+".noticia-principal img"
+);
+
+
+const tituloPrincipal =
+document.querySelector(
+".noticia-principal h2"
+);
+
+
+const textoPrincipal =
+document.querySelector(
+".noticia-principal p"
+);
+
+
+
+if(img){
+
+img.src=imagem;
+
+}
+
+
+if(tituloPrincipal){
+
+tituloPrincipal.innerHTML=titulo;
+
+}
+
+
+
+if(textoPrincipal){
+
+textoPrincipal.innerHTML=descricao;
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ======================
+   CARD
+====================== */
+
+
+
+cardsNoticias.innerHTML += `
+
+
+<article class="card">
+
+
+<img 
+src="${imagem}"
+onerror="this.src='${imagemPadrao}'"
+>
+
+
+
+<div class="conteudo">
+
+
+<span>
+
+🇧🇷 ${categoria}
+
+</span>
+
+
+
+<h3>
+
+${titulo}
+
+</h3>
+
+
+
+<p>
+
+${descricao}
+
+</p>
+
+
+
+<button onclick="abrirNoticia(${index})">
+
+Ler notícia
+
+</button>
+
+
+
+</div>
+
+
+</article>
+
+
+`;
+
+
+
+
+
+
+
+
+
+
+/* ======================
+   LISTA
+====================== */
+
+
+if(listaNoticias){
+
+
+
+listaNoticias.innerHTML += `
+
+
+<div class="noticia">
+
+
+<img 
+src="${imagem}"
+onerror="this.src='${imagemPadrao}'"
+>
+
+
+
+<div>
+
+
+<h3>
+
+${titulo}
+
+</h3>
+
+
+
+<p>
+
+Atualizado pelo BR NEWS
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
 
 });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================
+   ABRIR NOTÍCIA COMPLETA
+===================================== */
+
+
+function abrirNoticia(id){
+
+
+const noticia = 
+todasNoticias[id];
+
+
+
+localStorage.setItem(
+
+"noticiaSelecionada",
+
+JSON.stringify(noticia)
+
+);
+
+
+
+window.location.href =
+"noticia.html";
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================
+   PESQUISA
+===================================== */
+
+
+if(campoPesquisa){
+
+
+campoPesquisa.addEventListener(
+"input",
+()=>{
+
+
+const texto =
+
+campoPesquisa.value
+.toLowerCase();
+
+
+
+const filtradas =
+
+todasNoticias.filter(
+(noticia)=>{
+
+
+const titulo =
+
+(
+noticia.titulo ||
+noticia.title ||
+""
+)
+.toLowerCase();
+
+
+
+return titulo.includes(texto);
+
+
+
+});
+
+
+
+mostrarNoticias(filtradas);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================
+   VÍDEOS AUTOMÁTICOS
+===================================== */
+
+
+async function carregarVideos(){
+
+
+
+if(!listaVideos){
+
+return;
+
+}
+
+
+
+try{
+
+
+const resposta =
+await fetch(
+"videos/videos.json"
+);
+
+
+
+const videos =
+await resposta.json();
+
+
+
+listaVideos.innerHTML="";
+
+
+
+videos.forEach(video=>{
+
+
+listaVideos.innerHTML += `
+
+
+<div class="video-card">
+
+
+<video controls>
+
+
+<source 
+src="videos/${video.arquivo}"
+type="video/mp4"
+>
+
+
+</video>
+
+
+
+<div class="video-info">
+
+
+<h3>
+
+${video.titulo}
+
+</h3>
+
+
+
+<p>
+
+${video.descricao}
+
+</p>
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+catch(erro){
+
+
+console.log(
+"Vídeos não encontrados"
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================
+   INICIAR
+===================================== */
+
+
+carregarNoticias();
+
+
+carregarVideos();
+
+
+
+
+
+/* Atualiza a cada 5 minutos */
+
+
+setInterval(()=>{
+
+
+carregarNoticias();
+
+
+},300000);

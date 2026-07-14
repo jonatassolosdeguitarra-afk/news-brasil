@@ -1,6 +1,6 @@
 /* =====================================
    BR NEWS BRASIL NOTÍCIAS
-   JAVASCRIPT PROFISSIONAL 4.0
+   SCRIPT PROFISSIONAL ATUALIZADO
 ===================================== */
 
 
@@ -8,8 +8,9 @@ const API_URL =
 "https://news-brasil-api.onrender.com/noticias";
 
 
-const imagemPadrao =
+const IMAGEM_PADRAO =
 "imagens/fundo.jpg";
+
 
 
 let todasNoticias = [];
@@ -32,7 +33,6 @@ const dataHora =
 document.getElementById("dataHora");
 
 
-
 const listaVideos =
 document.getElementById("listaVideos");
 
@@ -42,8 +42,9 @@ document.getElementById("listaVideos");
 
 
 
+
 /* =====================================
-   RELÓGIO
+   DATA E HORA
 ===================================== */
 
 
@@ -53,18 +54,17 @@ function atualizarHora(){
 if(dataHora){
 
 
-const data = new Date();
+const agora = new Date();
 
 
 dataHora.innerHTML =
-data.toLocaleString("pt-BR");
+agora.toLocaleString("pt-BR");
 
 
 }
 
 
 }
-
 
 
 setInterval(
@@ -82,9 +82,8 @@ atualizarHora();
 
 
 
-
 /* =====================================
-   BUSCAR NOTÍCIAS
+   CARREGAR NOTÍCIAS
 ===================================== */
 
 
@@ -102,23 +101,23 @@ await fetch(API_URL);
 if(!resposta.ok){
 
 throw new Error(
-"API offline"
+"Erro na API"
 );
 
 }
 
 
 
-const dados =
+const noticias =
 await resposta.json();
 
 
 
-todasNoticias = dados;
+todasNoticias = noticias;
 
 
 
-mostrarNoticias(dados);
+mostrarNoticias(noticias);
 
 
 
@@ -128,6 +127,7 @@ catch(erro){
 
 
 console.log(
+"Erro ao carregar notícias:",
 erro
 );
 
@@ -140,15 +140,13 @@ cardsNoticias.innerHTML = `
 
 <div class="loading">
 
-Não foi possível carregar notícias.
+⚠️ Notícias indisponíveis no momento.
 
 </div>
 
 `;
 
-
 }
-
 
 
 }
@@ -170,7 +168,7 @@ Não foi possível carregar notícias.
 ===================================== */
 
 
-function mostrarNoticias(noticias){
+function mostrarNoticias(lista){
 
 
 if(!cardsNoticias){
@@ -181,28 +179,29 @@ return;
 
 
 
-cardsNoticias.innerHTML="";
+cardsNoticias.innerHTML = "";
 
 
 
 if(listaNoticias){
 
-listaNoticias.innerHTML="";
+listaNoticias.innerHTML = "";
 
 }
 
 
 
-noticias
+lista
 .slice(0,12)
 .forEach((noticia,index)=>{
+
 
 
 const titulo =
 
 noticia.titulo ||
 noticia.title ||
-"Sem título";
+"Notícia sem título";
 
 
 
@@ -210,67 +209,101 @@ const descricao =
 
 noticia.descricao ||
 noticia.description ||
-"Confira essa notícia completa.";
+"Confira todos os detalhes desta notícia.";
 
 
 
-const imagem =
+
+
+let imagem =
 
 noticia.imagem ||
 noticia.image ||
 noticia.urlToImage ||
-imagemPadrao;
+IMAGEM_PADRAO;
 
 
 
-const categoria =
+// evita imagem vazia
 
-noticia.categoria ||
-"Brasil";
+if(
+imagem === "" ||
+imagem === null ||
+imagem === undefined
+){
 
+imagem = IMAGEM_PADRAO;
 
-
-
-
-
-
-/* ======================
-   DESTAQUE
-====================== */
+}
 
 
-if(index===0){
 
 
-const img =
+
+
+
+/* =====================================
+   NOTÍCIA PRINCIPAL
+===================================== */
+
+
+if(index === 0){
+
+
+
+const imagemPrincipal =
+
 document.querySelector(
 ".noticia-principal img"
 );
 
 
+
 const tituloPrincipal =
+
 document.querySelector(
 ".noticia-principal h2"
 );
 
 
+
 const textoPrincipal =
+
 document.querySelector(
 ".noticia-principal p"
 );
 
 
 
-if(img){
 
-img.src=imagem;
+if(imagemPrincipal){
+
+
+imagemPrincipal.src = imagem;
+
+
+
+imagemPrincipal.onerror = function(){
+
+
+this.src =
+IMAGEM_PADRAO;
+
+
+};
+
 
 }
 
 
+
+
 if(tituloPrincipal){
 
-tituloPrincipal.innerHTML=titulo;
+
+tituloPrincipal.innerHTML =
+titulo;
+
 
 }
 
@@ -278,7 +311,10 @@ tituloPrincipal.innerHTML=titulo;
 
 if(textoPrincipal){
 
-textoPrincipal.innerHTML=descricao;
+
+textoPrincipal.innerHTML =
+descricao;
+
 
 }
 
@@ -294,10 +330,9 @@ textoPrincipal.innerHTML=descricao;
 
 
 
-/* ======================
-   CARD
-====================== */
-
+/* =====================================
+   CARD DE NOTÍCIA
+===================================== */
 
 
 cardsNoticias.innerHTML += `
@@ -308,7 +343,8 @@ cardsNoticias.innerHTML += `
 
 <img 
 src="${imagem}"
-onerror="this.src='${imagemPadrao}'"
+alt="${titulo}"
+onerror="this.src='${IMAGEM_PADRAO}'"
 >
 
 
@@ -318,7 +354,7 @@ onerror="this.src='${imagemPadrao}'"
 
 <span>
 
-🇧🇷 ${categoria}
+🇧🇷 BR NEWS
 
 </span>
 
@@ -351,6 +387,7 @@ Ler notícia
 </div>
 
 
+
 </article>
 
 
@@ -364,14 +401,12 @@ Ler notícia
 
 
 
-
-/* ======================
-   LISTA
-====================== */
+/* =====================================
+   LISTA DE NOTÍCIAS
+===================================== */
 
 
 if(listaNoticias){
-
 
 
 listaNoticias.innerHTML += `
@@ -381,8 +416,11 @@ listaNoticias.innerHTML += `
 
 
 <img 
+
 src="${imagem}"
-onerror="this.src='${imagemPadrao}'"
+
+onerror="this.src='${IMAGEM_PADRAO}'"
+
 >
 
 
@@ -408,13 +446,10 @@ Atualizado pelo BR NEWS
 </div>
 
 
-
 </div>
 
 
 `;
-
-
 
 }
 
@@ -442,7 +477,8 @@ Atualizado pelo BR NEWS
 function abrirNoticia(id){
 
 
-const noticia = 
+const noticia =
+
 todasNoticias[id];
 
 
@@ -481,17 +517,16 @@ if(campoPesquisa){
 
 campoPesquisa.addEventListener(
 "input",
-()=>{
+function(){
 
 
 const texto =
 
-campoPesquisa.value
-.toLowerCase();
+this.value.toLowerCase();
 
 
 
-const filtradas =
+const resultado =
 
 todasNoticias.filter(
 (noticia)=>{
@@ -516,7 +551,7 @@ return titulo.includes(texto);
 
 
 
-mostrarNoticias(filtradas);
+mostrarNoticias(resultado);
 
 
 
@@ -534,7 +569,7 @@ mostrarNoticias(filtradas);
 
 
 /* =====================================
-   VÍDEOS AUTOMÁTICOS
+   VÍDEOS
 ===================================== */
 
 
@@ -554,18 +589,29 @@ try{
 
 
 const resposta =
+
 await fetch(
 "videos/videos.json"
 );
 
 
 
+if(!resposta.ok){
+
+return;
+
+}
+
+
+
 const videos =
+
 await resposta.json();
 
 
 
 listaVideos.innerHTML="";
+
 
 
 
@@ -582,9 +628,15 @@ listaVideos.innerHTML += `
 
 
 <source 
+
 src="videos/${video.arquivo}"
+
 type="video/mp4"
+
 >
+
+
+Seu navegador não suporta vídeo.
 
 
 </video>
@@ -630,9 +682,8 @@ catch(erro){
 
 
 console.log(
-"Vídeos não encontrados"
+"Sem vídeos disponíveis"
 );
-
 
 
 }
@@ -650,7 +701,7 @@ console.log(
 
 
 /* =====================================
-   INICIAR
+   INICIAR SISTEMA
 ===================================== */
 
 
@@ -663,8 +714,7 @@ carregarVideos();
 
 
 
-/* Atualiza a cada 5 minutos */
-
+// Atualiza notícias a cada 5 minutos
 
 setInterval(()=>{
 
